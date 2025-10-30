@@ -1,3 +1,4 @@
+import { ApiProperty } from '@nestjs/swagger';
 import {
   IsString,
   MinLength,
@@ -7,6 +8,7 @@ import {
 } from 'class-validator';
 
 export class CreateEventDto {
+  @ApiProperty()
   @IsString()
   @MinLength(3)
   @IsNotEmpty()
@@ -15,6 +17,7 @@ export class CreateEventDto {
   })
   name: string;
 
+  @ApiProperty()
   @IsNumber()
   @IsNotEmpty()
   totalSeats: number;

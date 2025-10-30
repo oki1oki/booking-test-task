@@ -35,10 +35,10 @@ model Event {
 model Booking {
   id Int @id @default(autoincrement())
 
-  event   Event @relation(fields: [eventId], references: [id])
+  event   Event @relation(fields: [eventId], references: [id], onDelete: Cascade)
   eventId Int
 
-  user   User @relation(fields: [userId], references: [id])
+  user   User @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId Int
 
   createdAt DateTime @default(now()) @map("created_at")

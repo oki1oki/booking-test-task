@@ -1,4 +1,8 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import {
+  ConflictException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { CreateBookingDto } from './dto/create-booking.dto';
 import { UserService } from 'src/user/user.service';
@@ -21,7 +25,7 @@ export class BookingService {
     if (!event) throw new NotFoundException('Событие не найдено');
 
     if (event.bookedSeats >= event.totalSeats)
-      throw new NotFoundException('Нет доступных мест на это событие');
+      throw new ConflictException('Нет доступных мест на это событие');
 
     const user = await this.userService.findById(userId);
 
@@ -35,11 +39,11 @@ export class BookingService {
     });
 
     if (existingUserBooking)
-      throw new NotFoundException(
+      throw new ConflictException(
         'Пользователь уже забронировал место на это событие',
       );
 
-    await this.prismaService.booking.create({
+    const booking = await this.prismaService.booking.create({
       data: {
         eventId,
         userId,
@@ -48,7 +52,7 @@ export class BookingService {
 
     await this.eventService.updateBookedSeats(eventId, 1);
 
-    return { message: 'Бронирование успешно создано' };
+    return { message: 'Бронирование успешно создано', booking };
   }
 
   async cancel(dto: CancelBookingDto) {
