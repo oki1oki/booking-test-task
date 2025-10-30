@@ -1,16 +1,18 @@
 {
   "version": 2,
-  "buildCommand": "npm run build",
-  "outputDirectory": "dist",
-  "functions": {
-    "dist/src/main.js": {
-      "includeFiles": "node_modules/@scalar/**"
+  "builds": [
+    {
+      "src": "src/main.js",
+      "use": "@vercel/node",
+      "config": {
+        "includeFiles": ["node_modules/@scalar/**"]
+      }
     }
-  },
+  ],
   "routes": [
     {
       "src": "/(.*)",
-      "dest": "/dist/src/main.js"
+      "dest": "/src/main.js"
     }
   ]
 }
