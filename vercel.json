@@ -4,10 +4,7 @@
   "outputDirectory": "dist",
   "functions": {
     "dist/src/main.js": {
-      "includeFiles": [
-        "node_modules/@scalar/**/*",
-        "node_modules/@scalar/core/**/*"
-      ]
+      "includeFiles": "node_modules/@scalar/**"
     }
   },
   "routes": [
