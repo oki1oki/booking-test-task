@@ -1,11 +1,12 @@
 import { NestFactory } from '@nestjs/core';
 import { ValidationPipe } from '@nestjs/common';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
-import { apiReference } from '@scalar/nestjs-api-reference';
 import { AppModule } from './app.module';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+  const { apiReference } = await eval("import('@scalar/nestjs-api-reference')");
 
   const config = new DocumentBuilder()
     .setTitle('Тестовое задание')
@@ -17,8 +18,11 @@ async function bootstrap() {
 
   app.use(
     '/openapi',
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-call
     apiReference({
-      content: document,
+      spec: {
+        content: document,
+      },
     }),
   );
 
