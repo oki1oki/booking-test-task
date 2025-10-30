@@ -1,18 +1,19 @@
 {
   "version": 2,
-  "builds": [
-    {
-      "src": "src/main.ts",
-      "use": "@vercel/node",
-      "config": {
-        "includeFiles": ["node_modules/@scalar/**"]
-      }
+  "buildCommand": "npm run build",
+  "outputDirectory": "dist",
+  "functions": {
+    "dist/src/main.js": {
+      "includeFiles": [
+        "node_modules/@scalar/**/*",
+        "node_modules/@scalar/core/**/*"
+      ]
     }
-  ],
+  },
   "routes": [
     {
       "src": "/(.*)",
-      "dest": "/src/main.ts"
+      "dest": "/dist/src/main.js"
     }
   ]
 }
