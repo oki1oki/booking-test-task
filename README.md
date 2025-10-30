@@ -1,98 +1,162 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
-</p>
+# 🎫 Система бронирования событий
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+Проект для управления событиями и бронированием мест. Тестовое задание
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg" alt="Donate us"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow" alt="Follow us on Twitter"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+**Production URL:** https://booking-test-task-okeygers-projects.vercel.app
 
-## Description
+## 🚀 Технологический стек
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+- **Backend Framework:** NestJS
+- **ORM:** Prisma
+- **Database:** PostgreSQL
+- **Containerization:** Docker + Docker Compose
+- **API Documentation:** Scalar OpenAPI
+- **Deployment:** Vercel
 
-## Project setup
+## 📊 Схема базы данных
+<img width="400" alt="80eade6e-77a3-4e57-a559-2bb20f36b360" src="https://github.com/user-attachments/assets/4d3f16d7-dec9-4c53-b1fe-6c8cc8bb98fb" />
 
-```bash
-$ npm install
-```
+## 📚 API Документация
 
-## Compile and run the project
+Полная документация API доступна через Scalar OpenAPI:
+**🔗 [OpenAPI Documentation](https://booking-test-task-okeygers-projects.vercel.app/openapi)**
 
-```bash
-# development
-$ npm run start
+<img width="1919" height="987" alt="scalar-documentation" src="https://github.com/user-attachments/assets/fb8d1197-1a70-4e86-b84d-02e25450bc9a" />
 
-# watch mode
-$ npm run start:dev
+## 🛠 Локальная разработка
 
-# production mode
-$ npm run start:prod
-```
+### Предварительные требования
 
-## Run tests
+- Node.js 18+
+- Docker и Docker Compose
+- npm или yarn
+
+### 1. Клонирование репозитория
 
 ```bash
-# unit tests
-$ npm run test
-
-# e2e tests
-$ npm run test:e2e
-
-# test coverage
-$ npm run test:cov
+git clone <your-repo-url>
+cd booking-test-task
 ```
 
-## Deployment
+### 2. Настройка окружения
 
-When you're ready to deploy your NestJS application to production, there are some key steps you can take to ensure it runs as efficiently as possible. Check out the [deployment documentation](https://docs.nestjs.com/deployment) for more information.
+Создайте файл `.env` в корне проекта: (Для примера есть файл .env.example)
 
-If you are looking for a cloud-based platform to deploy your NestJS application, check out [Mau](https://mau.nestjs.com), our official platform for deploying NestJS applications on AWS. Mau makes deployment straightforward and fast, requiring just a few simple steps:
+### 3. Запуск базы данных
 
 ```bash
-$ npm install -g mau
-$ mau deploy
+# Запуск PostgreSQL в Docker
+docker-compose up -d
 ```
 
-With Mau, you can deploy your application in just a few clicks, allowing you to focus on building features rather than managing infrastructure.
+### 4. Установка зависимостей
 
-## Resources
+```bash
+npm install
+```
 
-Check out a few resources that may come in handy when working with NestJS:
+### 5. Настройка базы данных
 
-- Visit the [NestJS Documentation](https://docs.nestjs.com) to learn more about the framework.
-- For questions and support, please visit our [Discord channel](https://discord.gg/G7Qnnhy).
-- To dive deeper and get more hands-on experience, check out our official video [courses](https://courses.nestjs.com/).
-- Deploy your application to AWS with the help of [NestJS Mau](https://mau.nestjs.com) in just a few clicks.
-- Visualize your application graph and interact with the NestJS application in real-time using [NestJS Devtools](https://devtools.nestjs.com).
-- Need help with your project (part-time to full-time)? Check out our official [enterprise support](https://enterprise.nestjs.com).
-- To stay in the loop and get updates, follow us on [X](https://x.com/nestframework) and [LinkedIn](https://linkedin.com/company/nestjs).
-- Looking for a job, or have a job to offer? Check out our official [Jobs board](https://jobs.nestjs.com).
+```bash
+# Генерация Prisma клиента
+npx prisma generate
 
-## Support
+# Применение миграций
+npx prisma db push
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+# Или создание миграции
+npx prisma migrate dev --name init
+```
 
-## Stay in touch
+### 6. Запуск приложения
 
-- Author - [Kamil Myśliwiec](https://twitter.com/kammysliwiec)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+```bash
+# Разработка с hot-reload
+npm run start:dev
 
-## License
+# Или production сборка
+npm run build
+npm run start:prod
+```
 
-Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
+Приложение будет доступно по адресу: `http://localhost:3000`
+
+## 📖 Доступные эндпоинты
+
+### Документация
+- `GET /openapi` - Scalar OpenAPI документация
+
+### Пользователи
+- `GET /api/users` - Получить всех пользователей
+- `GET /api/users/:id` - Получить пользователя по ID
+- `POST /api/users` - Создать нового пользователя
+
+### События
+- `GET /api/events` - Получить все события
+- `GET /api/events/:id` - Получить событие по ID
+- `POST /api/events` - Создать новое событие
+
+### Бронирования
+- `POST /api/bookings/reserve` - Забронировать место
+- `POST /api/bookings/cancel` - Отменить бронирование
+
+## 🐳 Docker Compose
+
+Проект включает `docker-compose.yml` для легкого развертывания:
+
+```bash
+# Запуск всей инфраструктуры
+docker-compose up -d
+
+# Остановка
+docker-compose down
+```
+
+## 🧪 Тестирование API
+
+Вы можете тестировать API напрямую через Scalar документацию:
+
+1. Откройте https://booking-test-task-okeygers-projects.vercel.app/openapi
+2. Используйте встроенный клиент для отправки запросов
+3. Все эндпоинты готовы к тестированию
+
+## 📝 Примеры использования
+
+### Создание пользователя
+```json
+POST /api/users
+{
+  "name": "Иван Иванов",
+  "email": "ivan@example.com"
+}
+```
+
+### Создание события
+```json
+POST /api/events
+{
+  "name": "Концерт Rock Band",
+  "totalSeats": 100
+}
+```
+
+### Бронирование места
+```json
+POST /api/bookings/reserve
+{
+  "eventId": 1,
+  "userId": 1
+}
+```
+
+## 🔧 Скрипты
+
+- `npm run start` - Запуск приложения
+- `npm run start:dev` - Запуск в режиме разработки
+- `npm run build` - Сборка проекта
+- `npm run test` - Запуск тестов
+- `npx prisma studio` - GUI для базы данных
+
+## 🚀 Деплой
+
+Проект автоматически деплоится на Vercel при пуше в ветку `main`.
