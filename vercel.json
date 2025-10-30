@@ -1,18 +1,18 @@
 {
   "version": 2,
-  "buildCommand": "npm run build",
-  "outputDirectory": "dist",
-  "installCommand": "npm install",
-  "functions": {
-    "dist/src/main.js": {
-      "maxDuration": 30,
-      "includeFiles": ["node_modules/@scalar/**/*"]
+  "builds": [
+    {
+      "src": "src/main.ts",
+      "use": "@vercel/node",
+      "config": {
+        "includeFiles": ["node_modules/@scalar/** "]
+      }
     }
-  },
+  ],
   "routes": [
     {
       "src": "/(.*)",
-      "dest": "/dist/src/main.js"
+      "dest": "/src/main.ts"
     }
   ]
 }
