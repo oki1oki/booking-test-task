@@ -18,9 +18,7 @@ async function bootstrap() {
   app.use(
     '/openapi',
     apiReference({
-      spec: {
-        content: document,
-      },
+      content: document,
     }),
   );
 
