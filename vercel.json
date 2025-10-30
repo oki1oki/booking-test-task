@@ -1,7 +1,18 @@
 {
-  "functions": {
-    "api/*.ts": {
-      "includeFiles": "node_modules/@scalar/**/*"
+  "version": 2,
+  "builds": [
+    {
+      "src": "dist/main.js",
+      "use": "@vercel/node",
+      "config": {
+        "includeFiles": ["node_modules/@scalar/**/*"]
+      }
     }
-  }
+  ],
+  "routes": [
+    {
+      "src": "/(.*)",
+      "dest": "dist/main.js"
+    }
+  ]
 }
