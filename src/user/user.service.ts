@@ -54,25 +54,27 @@ export class UserService {
     // номер месяца, неделя месяца, просто день(1 - 31)
     const { month, week, day } = params;
 
+    const monthNum = month ? parseInt(month) : null;
+    const weekNum = week ? parseInt(week) : null;
+    const dayNum = day ? parseInt(day) : null;
+
     const result = await this.prismaService.$queryRaw`
-    SELECT
-      user_id as "userId",
-      DENSE_RANK() OVER (ORDER BY COUNT(*) DESC)::int as place,
-      COUNT(*)::int as "bookingCount"
-    FROM "Booking"
-    WHERE
-      (${month}::int IS NULL OR EXTRACT(MONTH FROM created_at) = ${month}::int) AND
-
-      (${week}::int IS NULL OR (${month}::int IS NOT NULL AND 
-        EXTRACT(DAY FROM created_at) BETWEEN ((${week}::int - 1) * 7 + 1) AND (${week}::int * 7)
-      )) AND
-
-      (${day}::int IS NULL OR EXTRACT(DAY FROM created_at) = ${day}::int)
-    GROUP BY user_id
-    HAVING COUNT(*) > 0
-    ORDER BY "place" DESC
-    LIMIT 10
-  `;
+      SELECT
+        user_id as "userId",
+        DENSE_RANK() OVER (ORDER BY COUNT(*) DESC)::int as place,
+        COUNT(*)::int as "bookingCount"
+      FROM "Booking"
+      WHERE
+        (${monthNum}::int IS NULL OR EXTRACT(MONTH FROM created_at) = ${monthNum}::int) AND
+        (${weekNum}::int IS NULL OR (${monthNum}::int IS NOT NULL AND 
+          EXTRACT(DAY FROM created_at) BETWEEN ((${weekNum}::int - 1) * 7 + 1) AND (${weekNum}::int * 7)
+        )) AND
+        (${dayNum}::int IS NULL OR EXTRACT(DAY FROM created_at) = ${dayNum}::int)
+      GROUP BY user_id
+      HAVING COUNT(*) > 0
+      ORDER BY "bookingCount" DESC
+      LIMIT 10
+    `;
 
     return result;
   }
