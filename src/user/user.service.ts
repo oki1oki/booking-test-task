@@ -11,14 +11,6 @@ export class UserService {
       where: {
         id,
       },
-      include: {
-        bookings: {
-          select: {
-            event: true,
-            createdAt: true,
-          },
-        },
-      },
     });
   }
 
@@ -52,5 +44,35 @@ export class UserService {
         email,
       },
     });
+  }
+
+  async getTopByBookings(params: {
+    month?: string;
+    week?: string;
+    day?: string;
+  }) {
+    // номер месяца, неделя месяца, просто день(1 - 31)
+    const { month, week, day } = params;
+
+    const result = await this.prismaService.$queryRaw`
+    SELECT
+      user_id as "userId",
+      DENSE_RANK() OVER (ORDER BY COUNT(*) DESC)::int as place,
+      COUNT(*)::int as "bookingCount"
+    FROM "Booking"
+    WHERE
+      (${month}::int IS NULL OR EXTRACT(MONTH FROM created_at) = ${month}::int) AND
+
+      (${week}::int IS NULL OR (${month}::int IS NOT NULL AND 
+        EXTRACT(DAY FROM created_at) BETWEEN ((${week}::int - 1) * 7 + 1) AND (${week}::int * 7)
+      )) AND
+
+      (${day}::int IS NULL OR EXTRACT(DAY FROM created_at) = ${day}::int)
+    GROUP BY user_id
+    ORDER BY "bookingCount" DESC
+    LIMIT 10
+  `;
+
+    return result;
   }
 }

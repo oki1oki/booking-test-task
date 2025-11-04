@@ -5,6 +5,7 @@ import {
   NotFoundException,
   Param,
   Post,
+  Query,
 } from '@nestjs/common';
 import { UserService } from './user.service';
 import { CreateUserDto } from './dto/create-user.dto';
@@ -26,6 +27,15 @@ export class UserController {
   })
   async findAll() {
     return this.userService.findAll();
+  }
+
+  @Get('top')
+  async getTopByBookings(
+    @Query('month') month?: string, // число месяца - number (1 - 12)
+    @Query('week') week?: string, // число недели в месяце - number (1 - 5)
+    @Query('day') day?: string, // просто день - number (1 - 31)
+  ) {
+    return this.userService.getTopByBookings({ month, week, day });
   }
 
   @Get(':id')
