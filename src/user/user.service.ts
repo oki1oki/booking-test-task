@@ -69,7 +69,8 @@ export class UserService {
 
       (${day}::int IS NULL OR EXTRACT(DAY FROM created_at) = ${day}::int)
     GROUP BY user_id
-    ORDER BY "bookingCount" DESC
+    HAVING COUNT(*) > 0
+    ORDER BY "place" DESC
     LIMIT 10
   `;
 
