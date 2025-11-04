@@ -34,15 +34,4 @@ export class EventService {
       },
     });
   }
-
-  async updateBookedSeats(id: number, change: number) {
-    return this.prismaService.event.update({
-      where: { id },
-      data: {
-        bookedSeats: {
-          increment: change,
-        },
-      },
-    });
-  }
 }

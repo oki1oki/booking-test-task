@@ -20,39 +20,42 @@ export class BookingService {
   async reserve(dto: CreateBookingDto) {
     const { eventId, userId } = dto;
 
-    const event = await this.eventService.findById(eventId);
+    return await this.prismaService.$transaction(async (db) => {
+      const event = await this.eventService.findById(eventId);
 
-    if (!event) throw new NotFoundException('Событие не найдено');
+      if (!event) throw new NotFoundException('Событие не найдено');
 
-    if (event.bookedSeats >= event.totalSeats)
-      throw new ConflictException('Нет доступных мест на это событие');
+      if (event.bookedSeats >= event.totalSeats)
+        throw new ConflictException('Нет доступных мест на это событие');
 
-    const user = await this.userService.findById(userId);
+      const user = await this.userService.findById(userId);
+      if (!user) throw new NotFoundException('Пользователь не найден');
 
-    if (!user) throw new NotFoundException('Пользователь не найден');
+      const existingUserBooking = await db.booking.findFirst({
+        where: { eventId, userId },
+      });
 
-    const existingUserBooking = await this.prismaService.booking.findFirst({
-      where: {
-        eventId,
-        userId,
-      },
+      if (existingUserBooking)
+        throw new ConflictException(
+          'Пользователь уже забронировал место на это событие',
+        );
+
+      const updatedEvent = await db.event.update({
+        where: {
+          id: eventId,
+        },
+        data: { bookedSeats: { increment: 1 } },
+      });
+
+      if (!updatedEvent)
+        throw new ConflictException('Нет доступных мест на это событие');
+
+      const booking = await db.booking.create({
+        data: { eventId, userId },
+      });
+
+      return { message: 'Бронирование успешно создано', booking };
     });
-
-    if (existingUserBooking)
-      throw new ConflictException(
-        'Пользователь уже забронировал место на это событие',
-      );
-
-    const booking = await this.prismaService.booking.create({
-      data: {
-        eventId,
-        userId,
-      },
-    });
-
-    await this.eventService.updateBookedSeats(eventId, 1);
-
-    return { message: 'Бронирование успешно создано', booking };
   }
 
   async cancel(dto: CancelBookingDto) {
@@ -71,7 +74,12 @@ export class BookingService {
       },
     });
 
-    await this.eventService.updateBookedSeats(booking.eventId, -1);
+    await this.prismaService.event.update({
+      where: {
+        id: booking.id,
+      },
+      data: { bookedSeats: { decrement: 1 } },
+    });
 
     return { message: 'Бронирование успешно отменено' };
   }
